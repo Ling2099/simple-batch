@@ -36,7 +36,7 @@ public class Splicer implements Serializable {
         return this;
     }
 
-    public Splicer columns(Set<String> columns) {
+    public Splicer columns(String[] columns) {
         this.map.put(BatchConstants.CUSTOMIZE_COLUMN, columns);
         return this;
     }
