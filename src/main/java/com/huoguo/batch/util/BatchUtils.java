@@ -1,0 +1,209 @@
+package com.huoguo.batch.util;
+
+import com.huoguo.batch.constant.BatchConstants;
+import org.springframework.lang.Nullable;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.UUID;
+import java.util.regex.Matcher;
+
+/**
+ * 工具类
+ *
+ * @author Lizhenghuang
+ */
+public final class BatchUtils {
+
+    /**
+     * 合并数组
+     *
+     * @param first  第一个数组
+     * @param second 第二个数组
+     * @param <T>    泛型
+     * @return 新的数组
+     */
+    public static <T> T[] concat(T[] first, T[] second) {
+        T[] result = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
+    /**
+     * 获取当前对象的父类对象
+     *
+     * @param clazz 当前对象
+     * @return 父类对象
+     */
+    public static Class<?> isSuper(Class<?> clazz) {
+        Class<?> superClazz = clazz.getSuperclass();
+        return superClazz != null && superClazz != Object.class ? superClazz : null;
+    }
+
+    /**
+     * 在反射时，排除掉序列化ID
+     *
+     * @param field 当前对象属性
+     * @return true代表当前属性为序列化ID
+     */
+    public static Boolean isStatic(Field field) {
+        return Modifier.isStatic(field.getModifiers());
+    }
+
+    /**
+     * 转换数据库与实体类映射字段
+     * 下划线/小写转大写
+     *
+     * @param str 数据库字段
+     * @return 实体类属性
+     */
+    public static String toUpper(String str) {
+        StringBuilder builder = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            char ch = str.charAt(i);
+            if ("_".equals(ch + "")) {
+                i = i + 1;
+                String up = (str.charAt(i) + "").toUpperCase();
+                builder.append(up);
+                continue;
+            }
+            builder.append(ch);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 转换数据库与实体类映射字段
+     * 大写转下划线/小写
+     *
+     * @param str 数据库字段
+     * @return 实体类属性
+     */
+    public static String toLower(String str) {
+        StringBuilder builder = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            String ch = str.charAt(i) + "";
+            Matcher matcher = BatchConstants.pattern.matcher(ch);
+            if (matcher.matches()) {
+                builder.append("_");
+            }
+            builder.append(ch.toLowerCase());
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 用于辨别属性类型，返回合适的类型值
+     *
+     * @param type  属性类型
+     * @param value 属性值
+     * @return 合适的属性值
+     */
+    public static Object getValue(Class<?> type, Object value) {
+        if (type == int.class || value instanceof Integer) {
+            return null == value ? 0 : Integer.parseInt(value.toString());
+        } else if (type == short.class) {
+            return null == value ? 0 : value;
+        } else if (type == byte.class) {
+            return null == value ? 0 : value;
+        } else if (type == double.class) {
+            return null == value ? 0 : Double.parseDouble(value.toString());
+        } else if (type == long.class) {
+            return null == value ? 0 : value;
+        } else if (type == Long.class) {
+            return null == value ? 0L : value;
+        } else if (type == String.class) {
+            return null == value ? "null" : "'" + value + "'";
+        } else if (type == boolean.class) {
+            return null == value ? true : value;
+        } else if (type == BigDecimal.class) {
+            return null == value ? new BigDecimal(0) : new BigDecimal(value + "");
+        } else if (type == Date.class) {
+            return null == value ? "null" : "'" + value + "'";
+        } else {
+            return type.cast(value);
+        }
+    }
+
+    /**
+     * 获取对象中的属性值
+     *
+     * @param str 属性名
+     * @param obj 参数对象
+     * @return 合适的属性值
+     */
+    public static Object getValue(String str, Object obj) {
+        try {
+            Field[] fields = obj.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (str.equals(field.getName())) {
+                    String upper = BatchConstants.DEFAULT_GET.concat(str.substring(0,1).toUpperCase()).concat(str.substring(1));
+                    Method method = obj.getClass().getMethod(upper, new Class[]{});
+                    return method.invoke(obj, new Object[]{});
+                }
+            }
+        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * StringBuilder拼接SQL字符串
+     *
+     * @param sb     StringBuilder
+     * @param val    字段、值或括号
+     * @param str    逗号
+     * @param isLast 是否为最后一行数据
+     */
+    public static void appends(StringBuilder sb, Object val, String str, boolean isLast) {
+        if (!isLast) {
+            if (!isEmpty(str)) {
+                sb.append(str);
+            }
+        }
+        if (!isEmpty(val)) {
+            sb.append(val);
+        }
+    }
+
+    /**
+     * 字符串拼接
+     *
+     * @param sb      StringBuilder
+     * @param objects Object数组
+     */
+    public static void appends(StringBuilder sb, Object... objects) {
+        for (Object obj : objects) {
+            sb.append(obj);
+        }
+    }
+
+    /**
+     * 获取UUID
+     *
+     * @return 字符串
+     */
+    public static String getUuid() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    /**
+     * 判别字符串是否为空或空字符串
+     *
+     * @param str 入参字符串
+     * @return Boolean
+     */
+    public static Boolean isEmpty(@Nullable Object str) {
+        return str == null || "".equals(str);
+    }
+
+}
