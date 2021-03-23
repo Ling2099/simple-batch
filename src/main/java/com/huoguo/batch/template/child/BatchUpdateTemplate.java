@@ -52,33 +52,34 @@ public class BatchUpdateTemplate extends AbstractTemplate {
                 }
             }
         }
-
+        // 待更改
         constructionSql(fields, column, condition, hasNull);
 
-//        for (Field field : fields) {
-//            if (BatchUtils.isStatic(field)) {
-//                continue;
-//            }
-//
-//            if (field.isAnnotationPresent(BatchIgnore.class)) {
-//                continue;
-//            }
-//
-//            String name = field.getName();
-//            if (field.isAnnotationPresent(BatchFill.class)) {
-//                Map<String, Object> bean = (Map) BatchBean.getBean(BatchConstants.FILL_NAME_INSERT);
-//                if (!bean.isEmpty()) {
-//                    column.append(BatchConstants.DEFAULT_SET).append(name).append(BatchConstants.DEFAULT_EQUAL).append(BatchUtils.addStr(bean.get(name).toString())).append(",");
-//                }
-//                continue;
-//            }
-//
-//            if (field.isAnnotationPresent(BatchId.class)) {
-//                condition.append(name).append(BatchConstants.DEFAULT_EQUAL).append(BatchConstants.DEFAULT_QUESTION);
-//                continue;
-//            }
-//            column.append(BatchConstants.DEFAULT_SET).append(name).append(BatchConstants.DEFAULT_EQUAL).append(BatchConstants.DEFAULT_QUESTION).append("?");
-//        }
+        for (Field field : fields) {
+            if (BatchUtils.isStatic(field)) {
+                continue;
+            }
+
+            if (field.isAnnotationPresent(BatchIgnore.class)) {
+                continue;
+            }
+
+            if (field.isAnnotationPresent(BatchLogic.class)) {
+                continue;
+            }
+
+            String name = field.getName();
+            if (field.isAnnotationPresent(BatchId.class)) {
+                continue;
+            }
+
+            if (field.isAnnotationPresent(BatchFill.class)) {
+                Map<String, Object> bean = (Map) BatchBean.getBean(BatchConstants.FILL_NAME_UPDATE);
+                if (!bean.isEmpty()) {
+                    map.putAll(bean);
+                }
+            }
+        }
 
         String sql = String.format(BatchSqlEnum.UPDATE_LIST.getSql(), tableName, column.toString(), condition.toString());
 
