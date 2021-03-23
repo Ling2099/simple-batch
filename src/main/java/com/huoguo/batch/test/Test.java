@@ -22,13 +22,12 @@ public class Test {
         list.add(user1);
         list.add(user2);
 
-        Splicer splicer = new Splicer().where().and("sex", 1).and("name", "张三");
+        Splicer splicer = new Splicer().columns(new String[]{"id", "name", "sex"});
 
 //        BatchService batchService = new BatchServiceImpl();
 //        batchService.deleteBatch(list, splicer);
 
-        String a = "我是你爸爸";
-        System.out.println(BatchUtils.addStr(a));
-
+        BatchService batchService = new BatchServiceImpl();
+        batchService.updateBatch(list);
     }
 }

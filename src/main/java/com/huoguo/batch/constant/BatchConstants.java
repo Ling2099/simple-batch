@@ -110,7 +110,6 @@ public final class BatchConstants {
     public static final String CUSTOMIZE_COLUMN = "column";
 
     /** 默认数据库关键字set **/
-    @Deprecated
     public static final String DEFAULT_SET = "SET ";
 
     /** 默认数据库关键字case **/

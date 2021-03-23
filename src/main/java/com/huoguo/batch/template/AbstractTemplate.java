@@ -23,17 +23,17 @@ public abstract class AbstractTemplate {
     /**
      * 模板模式对外提供的方法
      *
-     * @param list    数据集合
-     * @param size    每次批量操作的数据集合大小
-     * @param clazz   类实例
-     * @param splicer 条件构造器
+     * @param list      数据集合
+     * @param batchSize 每次批量操作的数据集合大小
+     * @param clazz     类实例
+     * @param splicer   条件构造器
      * @return 是否成功
      */
-    public Boolean bacth(List<?> list, int size, Class<?> clazz, Splicer splicer) {
+    public boolean bacth(List<?> list, int batchSize, Class<?> clazz, Splicer splicer) {
         if (list == null || list.isEmpty()) {
             throw new RuntimeException("The current collection is empty");
         }
-        return this.handle(list, size, clazz == null ? this.getClazz(list) : clazz, splicer);
+        return this.handle(list, batchSize, clazz == null ? this.getClazz(list) : clazz, splicer);
     }
 
     /**
@@ -45,9 +45,10 @@ public abstract class AbstractTemplate {
      * @param splicer   条件构造器
      * @return 是否成功
      */
-    private Boolean handle(List<?> list, int batchSize, Class<?> clazz, Splicer splicer) {
+    private boolean handle(List<?> list, int batchSize, Class<?> clazz, Splicer splicer) {
         Map<String, Object> map = this.getSql(this.getField(clazz), this.getTableName(clazz), splicer);
-        return this.execute(list, batchSize, map);
+        // return this.execute(list, batchSize, map);
+        return true;
     }
 
     /**
@@ -114,7 +115,7 @@ public abstract class AbstractTemplate {
      *
      * @return 是否成功
      */
-    private Boolean execute(List<?> list, int batchSize, Map<String, Object> map) {
+    private boolean execute(List<?> list, int batchSize, Map<String, Object> map) {
         DataSource dataSource = (DataSource) BatchBean.getBean(BatchConstants.DEFAULT_BEAN_DATASOURCE);
         Connection conn = null;
         PreparedStatement ptm = null;

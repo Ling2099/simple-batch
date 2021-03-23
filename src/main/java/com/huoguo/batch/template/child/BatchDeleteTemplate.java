@@ -68,7 +68,8 @@ public class BatchDeleteTemplate extends AbstractTemplate {
                 map.put(BatchConstants.DEFAULT_PRIMARY_KEY, name);
             }
         }
-        String sql = String.format(BatchSqlEnum.DELETE_LIST.getSql(), tableName, BatchUtils.toLower(column.toString()), condition.toString());
+        String sql = String.format(BatchSqlEnum.DELETE_LIST.getSql(), tableName,
+                BatchUtils.toLower(column.toString()), BatchUtils.toLower(condition.toString()));
         map.put(BatchConstants.DEFAULT_KEY_SQL, sql);
         return map;
     }
