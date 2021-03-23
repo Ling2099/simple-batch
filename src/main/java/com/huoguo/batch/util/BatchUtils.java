@@ -10,6 +10,7 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
@@ -53,6 +54,17 @@ public final class BatchUtils {
      */
     public static Boolean isStatic(Field field) {
         return Modifier.isStatic(field.getModifiers());
+    }
+
+    /**
+     * 判断集合为包装类型或自定义对象
+     *
+     * @param list 实例集合
+     * @return Boolean
+     */
+    public static Boolean isClazz(List<?> list) {
+        Class clazz = list.get(BatchConstants.DEFAULT_INDEX_VALUE).getClass();
+        return clazz == Integer.class || clazz == Long.class || clazz == String.class;
     }
 
     /**
@@ -206,4 +218,13 @@ public final class BatchUtils {
         return str == null || "".equals(str);
     }
 
+    /**
+     * 字符串追加引号
+     *
+     * @param str 当前字符串
+     * @return
+     */
+    public static String addStr(String str) {
+        return "\'".concat(str).concat("\'");
+    }
 }

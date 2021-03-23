@@ -4,9 +4,8 @@ package com.huoguo.batch.model;
 import com.huoguo.batch.constant.BatchConstants;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 条件构造器
@@ -19,7 +18,7 @@ public class Splicer implements Serializable {
     private Map<String, Object> map;
 
     public Splicer() {
-        this.map = new ConcurrentHashMap<>(BatchConstants.DEFAULT_CAPACITY);
+        this.map = new LinkedHashMap<>(BatchConstants.DEFAULT_CAPACITY);
     }
 
     public Splicer where() {
@@ -31,10 +30,10 @@ public class Splicer implements Serializable {
         return this;
     }
 
-    public Splicer and(String column) {
-        this.map.put(column, null);
-        return this;
-    }
+//    public Splicer and(String column) {
+//        this.map.put(column, null);
+//        return this;
+//    }
 
     public Splicer columns(String[] columns) {
         this.map.put(BatchConstants.CUSTOMIZE_COLUMN, columns);

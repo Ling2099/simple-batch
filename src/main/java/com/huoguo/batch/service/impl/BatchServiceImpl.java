@@ -4,6 +4,7 @@ import com.huoguo.batch.constant.BatchConstants;
 import com.huoguo.batch.model.Splicer;
 import com.huoguo.batch.service.BatchService;
 import com.huoguo.batch.template.AbstractTemplate;
+import com.huoguo.batch.template.child.BatchDeleteTemplate;
 import com.huoguo.batch.template.child.BatchInsertTemplate;
 import org.springframework.stereotype.Service;
 
@@ -50,9 +51,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, null);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, null);
     }
 
     /**
@@ -64,9 +64,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, size, null, null);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, null, null);
     }
 
     /**
@@ -78,9 +77,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, Class<?> clazz) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, null);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, null);
     }
 
     /**
@@ -93,9 +91,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size, Class<?> clazz) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, size, clazz, null);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, clazz, null);
     }
 
     /**
@@ -107,9 +104,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, Splicer splicer) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, splicer);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, null, splicer);
     }
 
     /**
@@ -122,9 +118,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size, Splicer splicer) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, size, null, splicer);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, null, splicer);
     }
 
     /**
@@ -137,9 +132,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, Splicer splicer, Class<?> clazz) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, splicer);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, BatchConstants.DEFAULT_BATCH_SIZE, clazz, splicer);
     }
 
     /**
@@ -153,9 +147,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public Boolean deleteBatch(List<?> list, int size, Splicer splicer, Class<?> clazz) {
-//        AbstractTemplate delete = new BatchDeleteTemplate();
-//        return delete.bacth(list, size, clazz, splicer);
-        return true;
+        AbstractTemplate delete = new BatchDeleteTemplate();
+        return delete.bacth(list, size, clazz, splicer);
     }
 
     /**

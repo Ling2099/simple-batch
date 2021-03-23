@@ -81,11 +81,9 @@ public final class BatchConstants {
     public static final String DEFAULT_VALUE = "DEFAULT";
 
     /** 默认SQL条件拼接字段 **/
-    @Deprecated
     public static final String DEFAULT_EQUAL = " = ";
 
     /** 默认SQL条件拼接字段 **/
-    @Deprecated
     public static final String DEFAULT_AND = " AND ";
 
     /** 默认SQL条件拼接字段 **/

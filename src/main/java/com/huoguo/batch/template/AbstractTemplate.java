@@ -119,14 +119,16 @@ public abstract class AbstractTemplate {
         Connection conn = null;
         PreparedStatement ptm = null;
         int size = list.size();
+        boolean result = false;
+
         try {
             conn = dataSource.getConnection();
             ptm = conn.prepareStatement(map.get(BatchConstants.DEFAULT_KEY_SQL).toString());
             conn.setAutoCommit(false);
             this.setVal(ptm, list, size, batchSize, map);
-            int[] arr = ptm.executeBatch();
+            ptm.executeBatch();
             conn.commit();
-            return arr.length == size - 1;
+            result = true;
         } catch (SQLException sql) {
             try {
                 conn.rollback();
@@ -145,6 +147,6 @@ public abstract class AbstractTemplate {
                 e.printStackTrace();
             }
         }
-        return false;
+        return result;
     }
 }
