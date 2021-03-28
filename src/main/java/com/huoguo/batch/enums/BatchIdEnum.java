@@ -7,16 +7,24 @@ package com.huoguo.batch.enums;
  */
 public enum BatchIdEnum {
 
-    /** 自增ID **/
+    /**
+     * 主键 自增ID
+     **/
     AUTO(0, "AUTO"),
 
-    /** 用户输入ID **/
+    /**
+     * 主键 用户输入ID
+     **/
     INPUT(1, "INPUT"),
 
-    /** 雪花ID **/
+    /**
+     * 主键 雪花ID
+     **/
     ASSIGN_ID(2, "ASSIGN_ID"),
 
-    /** UUID **/
+    /**
+     * 主键 UUID
+     **/
     ASSIGN_UUID(3, "ASSIGN_UUID");
 
     private final int key;

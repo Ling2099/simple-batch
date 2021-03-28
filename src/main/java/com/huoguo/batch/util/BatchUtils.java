@@ -1,15 +1,12 @@
 package com.huoguo.batch.util;
 
 import com.huoguo.batch.constant.BatchConstants;
-import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -52,7 +49,7 @@ public final class BatchUtils {
      * @param field 当前对象属性
      * @return true代表当前属性为序列化ID
      */
-    public static Boolean isStatic(Field field) {
+    public static boolean isStatic(Field field) {
         return Modifier.isStatic(field.getModifiers());
     }
 
@@ -60,9 +57,9 @@ public final class BatchUtils {
      * 判断集合为包装类型或自定义对象
      *
      * @param list 实例集合
-     * @return Boolean
+     * @return boolean
      */
-    public static Boolean isClazz(List<?> list) {
+    public static boolean isClazz(List<?> list) {
         Class clazz = list.get(BatchConstants.DEFAULT_INDEX_VALUE).getClass();
         return clazz == Integer.class || clazz == Long.class || clazz == String.class;
     }
@@ -112,39 +109,6 @@ public final class BatchUtils {
     }
 
     /**
-     * 用于辨别属性类型，返回合适的类型值
-     *
-     * @param type  属性类型
-     * @param value 属性值
-     * @return 合适的属性值
-     */
-    public static Object getValue(Class<?> type, Object value) {
-        if (type == int.class || value instanceof Integer) {
-            return null == value ? 0 : Integer.parseInt(value.toString());
-        } else if (type == short.class) {
-            return null == value ? 0 : value;
-        } else if (type == byte.class) {
-            return null == value ? 0 : value;
-        } else if (type == double.class) {
-            return null == value ? 0 : Double.parseDouble(value.toString());
-        } else if (type == long.class) {
-            return null == value ? 0 : value;
-        } else if (type == Long.class) {
-            return null == value ? 0L : value;
-        } else if (type == String.class) {
-            return null == value ? "null" : "'" + value + "'";
-        } else if (type == boolean.class) {
-            return null == value ? true : value;
-        } else if (type == BigDecimal.class) {
-            return null == value ? new BigDecimal(0) : new BigDecimal(value + "");
-        } else if (type == Date.class) {
-            return null == value ? "null" : "'" + value + "'";
-        } else {
-            return type.cast(value);
-        }
-    }
-
-    /**
      * 获取对象中的属性值
      *
      * @param str 属性名
@@ -157,7 +121,7 @@ public final class BatchUtils {
             for (Field field : fields) {
                 field.setAccessible(true);
                 if (str.equals(field.getName())) {
-                    String upper = BatchConstants.DEFAULT_GET.concat(str.substring(0,1).toUpperCase()).concat(str.substring(1));
+                    String upper = BatchConstants.DEFAULT_GET.concat(str.substring(0, 1).toUpperCase()).concat(str.substring(1));
                     Method method = obj.getClass().getMethod(upper, new Class[]{});
                     return method.invoke(obj, new Object[]{});
                 }
@@ -169,33 +133,14 @@ public final class BatchUtils {
     }
 
     /**
-     * StringBuilder拼接SQL字符串
-     *
-     * @param sb     StringBuilder
-     * @param val    字段、值或括号
-     * @param str    逗号
-     * @param isLast 是否为最后一行数据
-     */
-    public static void appends(StringBuilder sb, Object val, String str, boolean isLast) {
-        if (!isLast) {
-            if (!isEmpty(str)) {
-                sb.append(str);
-            }
-        }
-        if (!isEmpty(val)) {
-            sb.append(val);
-        }
-    }
-
-    /**
      * 字符串拼接
      *
      * @param sb      StringBuilder
-     * @param objects Object数组
+     * @param strings String数组
      */
-    public static void appends(StringBuilder sb, Object... objects) {
-        for (Object obj : objects) {
-            sb.append(obj);
+    public static void appends(StringBuilder sb, String... strings) {
+        for (String str : strings) {
+            sb.append(str);
         }
     }
 
@@ -212,9 +157,9 @@ public final class BatchUtils {
      * 判别字符串是否为空或空字符串
      *
      * @param str 入参字符串
-     * @return Boolean
+     * @return boolean
      */
-    public static Boolean isEmpty(@Nullable Object str) {
+    public static boolean isEmpty(Object str) {
         return str == null || "".equals(str);
     }
 
@@ -222,7 +167,7 @@ public final class BatchUtils {
      * 字符串追加引号
      *
      * @param str 当前字符串
-     * @return
+     * @return String
      */
     public static String addStr(String str) {
         return "\'".concat(str).concat("\'");

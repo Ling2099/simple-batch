@@ -7,13 +7,19 @@ package com.huoguo.batch.enums;
  */
 public enum BatchSqlEnum {
 
-    /** 新增 **/
+    /**
+     * 新增 SQL字符串
+     **/
     INSERT_LIST("insert", "INSERT INTO %s (%s) VALUES (%s)"),
 
-    /** 编辑 **/
+    /**
+     * 编辑 SQL字符串
+     **/
     UPDATE_LIST("update", "UPDATE %s %s WHERE %s"),
 
-    /** 删除 **/
+    /**
+     * 删除 SQL字符串
+     **/
     DELETE_LIST("delete", "UPDATE %s SET %s WHERE %s");
 
     private final String method;

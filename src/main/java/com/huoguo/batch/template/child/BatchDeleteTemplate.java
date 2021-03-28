@@ -29,7 +29,7 @@ public class BatchDeleteTemplate extends AbstractTemplate {
      * @param fields    类的属性数组
      * @param tableName 表名
      * @param splicer   条件构造器
-     * @return
+     * @return Map
      */
     @Override
     protected Map<String, Object> getSql(Field[] fields, String tableName, Splicer splicer) {
@@ -50,7 +50,7 @@ public class BatchDeleteTemplate extends AbstractTemplate {
             String name = field.getName();
             if (field.isAnnotationPresent(BatchLogic.class)) {
                 BatchLogic batchLogic = field.getAnnotation(BatchLogic.class);
-                BatchUtils.appends(column, name, BatchConstants.DEFAULT_EQUAL, batchLogic.after());
+                BatchUtils.appends(column, BatchUtils.toLower(name), BatchConstants.DEFAULT_EQUAL, batchLogic.after());
                 continue;
             }
 
@@ -59,17 +59,17 @@ public class BatchDeleteTemplate extends AbstractTemplate {
                     map = splicer.getMap();
                     for (String key : map.keySet()) {
                         if (null != map.get(key)) {
-                            BatchUtils.appends(condition, key, BatchConstants.DEFAULT_EQUAL,
+                            BatchUtils.appends(condition, BatchUtils.toLower(key), BatchConstants.DEFAULT_EQUAL,
                                     BatchUtils.addStr(map.get(key).toString()), BatchConstants.DEFAULT_AND);
                         }
                     }
                 }
-                BatchUtils.appends(condition, name, BatchConstants.DEFAULT_EQUAL, BatchConstants.DEFAULT_QUESTION);
+                BatchUtils.appends(condition, BatchUtils.toLower(name), BatchConstants.DEFAULT_EQUAL, BatchConstants.DEFAULT_QUESTION);
                 map.put(BatchConstants.DEFAULT_PRIMARY_KEY, name);
             }
         }
         String sql = String.format(BatchSqlEnum.DELETE_LIST.getSql(), tableName,
-                BatchUtils.toLower(column.toString()), BatchUtils.toLower(condition.toString()));
+                column.toString(), condition.toString());
         map.put(BatchConstants.DEFAULT_KEY_SQL, sql);
         return map;
     }

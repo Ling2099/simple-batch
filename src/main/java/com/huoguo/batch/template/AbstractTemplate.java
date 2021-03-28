@@ -47,8 +47,7 @@ public abstract class AbstractTemplate {
      */
     private boolean handle(List<?> list, int batchSize, Class<?> clazz, Splicer splicer) {
         Map<String, Object> map = this.getSql(this.getField(clazz), this.getTableName(clazz), splicer);
-        // return this.execute(list, batchSize, map);
-        return true;
+        return this.execute(list, batchSize, map);
     }
 
     /**
@@ -94,7 +93,7 @@ public abstract class AbstractTemplate {
      * @param fields    类的属性数组
      * @param tableName 表名
      * @param splicer   条件构造器
-     * @return
+     * @return Map
      */
     protected abstract Map<String, Object> getSql(Field[] fields, String tableName, Splicer splicer);
 

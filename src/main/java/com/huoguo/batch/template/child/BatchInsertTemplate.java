@@ -31,7 +31,7 @@ public class BatchInsertTemplate extends AbstractTemplate {
      * @param fields    类的属性数组
      * @param tableName 表名
      * @param splicer   条件构造器
-     * @return
+     * @return Map
      */
     @Override
     protected Map<String, Object> getSql(Field[] fields, final String tableName, Splicer splicer) {

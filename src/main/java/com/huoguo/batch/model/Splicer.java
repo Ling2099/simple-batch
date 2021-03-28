@@ -21,22 +21,35 @@ public class Splicer implements Serializable {
         this.map = new LinkedHashMap<>(BatchConstants.DEFAULT_CAPACITY);
     }
 
-    public Splicer where() {
-        return this;
-    }
-
+    /**
+     * SQL语句where后的条件构造
+     *
+     * @param column 字段名
+     * @param val    该字段对应的值
+     * @return Splicer
+     */
     public Splicer and(String column, Object val) {
         this.map.put(column, val);
         return this;
     }
 
+    /**
+     * SQL语句中自定义写入字段名
+     *
+     * @param columns 字段名数组
+     * @return Splicer
+     */
     public Splicer columns(String[] columns) {
         this.map.put(BatchConstants.CUSTOMIZE_COLUMN, columns);
         return this;
     }
 
+    /**
+     * 获取当前Map集合实例
+     *
+     * @return Map
+     */
     public Map<String, Object> getMap() {
         return map;
     }
-
 }
