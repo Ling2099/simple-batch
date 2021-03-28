@@ -25,19 +25,14 @@
 
 ## 说明 | Instructions
 
-* @BatchName 
-> 数据库表名的注解
-* @BatchId
-> 主键策略的注解
-* @BatchFill
-> 自动填充字段的注解
-* @BatchLogic
-> 逻辑删除字段的注解
-* @BatchIgnore
-> 需要手动忽略字段的注解
-* @BatchSuper
-> 实体类所继承的父类注解
-
+|注解|说明|
+|:----|:----|
+|**@BatchName**|数据库表名的注解|
+|**@BatchId**|主键策略的注解|
+|**@BatchFill**|自动填充字段的注解|
+|**@BatchLogic**|逻辑删除字段的注解|
+|**@BatchIgnore**|需要手动忽略字段的注解|
+|**@BatchSuper**|实体类所继承的父类注解|
 ---
 
 ## 演示 | demonstration
@@ -51,16 +46,16 @@
 </dependency>
 ```
 * 开启扫描  
-```
+```java
 @ComponentScan("com.huoguo.batch")
 ```
 * 自动注入  
-```
+```java
 @Autowired
 private BatchService batchService;
 ```
 * 实体类注解
-```
+```java
 /**
  * BatchName注解用于声明此model所对应的数据库表名
  * 该实体类演示使用了Lombok插件
@@ -94,7 +89,7 @@ public class User {
 }  
 ```
 * 批量新增
-```
+```java
 public boolean save() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
@@ -105,7 +100,7 @@ public boolean save() {
 }
 ```
 * 批量修改
-```
+```java
 public boolean update() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
@@ -116,7 +111,7 @@ public boolean update() {
 }
 ```
 * 逻辑删除
-```
+```java
 public boolean delete() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
