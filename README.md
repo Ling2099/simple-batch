@@ -20,6 +20,7 @@
 - **逻辑删除**：提供默认的逻辑删除值或自定义
 - **简化操作**：通过添加实体类注解即可达到效果
 > 工作环境依赖于SpringMVC或Spring Boot、Mybatis或Mybatis Plus框架
+> 更多说明请移步：<http://baidu.com>
 
 ---
 
@@ -93,7 +94,8 @@ public class User {
 public boolean save() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
-        User user = new User().setAge(i).setMsg("批量新增" + i).setName("张三" + i).setCard("编号" + i).setSex(i);
+        User user = new User().setAge(i).setMsg("批量新增" + i)
+            .setName("张三" + i).setCard("编号" + i).setSex(i);
         list.add(user);
     }
     return batchService.insertBatch(list);
@@ -104,7 +106,8 @@ public boolean save() {
 public boolean update() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
-        User user = new User().setId(i).setAge(i * 2).setMsg("批量修改" + i).setName("李四" + i).setCard("编号" + i * 2).setSex(i * 2);
+        User user = new User().setId(i).setAge(i * 2).setMsg("批量修改" + i)
+            .setName("李四" + i).setCard("编号" + i * 2).setSex(i * 2);
         list.add(user);
     }
     return batchService.updateBatch(list);
