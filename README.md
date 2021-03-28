@@ -91,8 +91,12 @@ public class User {
 public boolean save() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
-        User user = new User().setAge(i).setMsg("批量新增" + i)
-            .setName("张三" + i).setCard("编号" + i).setSex(i);
+        User user = new User()
+            .setAge(i)
+            .setMsg("批量新增" + i)
+            .setName("张三" + i)
+            .setCard("编号" + i)
+            .setSex(i);
         list.add(user);
     }
     return batchService.insertBatch(list);
@@ -103,8 +107,13 @@ public boolean save() {
 public boolean update() {
     List<User> list = new ArrayList<>();
     for (int i = 0; i < 100000; i++) {
-        User user = new User().setId(i).setAge(i * 2).setMsg("批量修改" + i)
-            .setName("李四" + i).setCard("编号" + i * 2).setSex(i * 2);
+        User user = new User()
+            .setId(i)
+            .setAge(i * 2)
+            .setMsg("批量修改" + i)
+            .setName("李四" + i)
+            .setCard("编号" + i * 2)
+            .setSex(i * 2);
         list.add(user);
     }
     return batchService.updateBatch(list);
