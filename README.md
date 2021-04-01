@@ -47,7 +47,7 @@
 ```
 * 开启扫描  
 ```java
-@ComponentScan("com.huoguo.batch")
+@ComponentScan("com.huoguo")
 ```
 * 自动注入  
 ```java
